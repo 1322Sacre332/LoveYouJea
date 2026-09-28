@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Will you be my girlfriend? 💖</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background: linear-gradient(145deg, #fde2e4 0%, #fad0c4 40%, #fbc4d5 100%);
+      font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      position: relative;
+    }
+
+    .heart-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .heart-bg span {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 1.6rem;
+      animation: floatUp 8s infinite ease-in-out;
+      user-select: none;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+      50%  { transform: translateY(-40px) rotate(15deg); opacity: 0.7; }
+      100% { transform: translateY(-80px) rotate(-10deg); opacity: 0; }
+    }
+
+    .card {
+      position: relative;
+      z-index: 10;
+      background: rgba(255, 245, 245, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 56px;
+      padding: 40px 28px;
+      max-width: 550px;
+      width: 100%;
+      box-shadow: 0 25px 40px rgba(190, 80, 100, 0.25),
+                  0 0 0 2px rgba(255, 220, 220, 0.6) inset;
+      text-align: center;
+      border: 1px solid #fff0f2;
+    }
+
+    .question {
+      font-size: clamp(1.9rem, 8vw, 2.9rem);
+      font-weight: 700;
+      color: #a63a4b;
+      text-shadow: 2px 2px 0 #ffe3e8, 4px 4px 12px rgba(255, 180, 180, 0.5);
+      line-height: 1.3;
+      margin-bottom: 40px;
+      letter-spacing: -0.5px;
+      word-break: break-word;
+      padding: 0 8px;
+    }
+
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      min-height: 120px;
+      position: relative;
+    }
+
+    .btn {
+      border: none;
+      font-size: 1.6rem;
+      font-weight: 600;
+      padding: 18px 44px;
+      border-radius: 80px;
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 10px 18px rgba(180, 80, 100, 0.2);
+      letter-spacing: 1px;
+      font-family: inherit;
+      border: 2px solid rgba(255, 255, 255, 0.7);
+      min-width: 150px;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .btn-yes {
+      background: linear-gradient(135deg, #ff8eaa, #ff5f7e);
+      color: white;
+      text-shadow: 0 2px 6px rgba(150, 20, 50, 0.4);
+      box-shadow: 0 10px 20px rgba(220, 70, 100, 0.4);
+    }
+    .btn-yes:hover {
+      background: linear-gradient(135deg, #ff7b9c, #ff4a6e);
+      transform: scale(1.03);
+    }
+    .btn-yes:active { transform: scale(0.97); }
+
+    .btn-no {
+      background: linear-gradient(135deg, #e6cfd4, #dbb6be);
+      color: #7f4b56;
+      text-shadow: 0 1px 2px #ffeef1;
+      box-shadow: 0 8px 14px rgba(150, 100, 110, 0.25);
+      will-change: transform;
+      /* Slight hint that it's playful, but stays consistent shape */
+      position: relative;
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 30px 16px; border-radius: 40px; }
+      .question { margin-bottom: 28px; font-size: 2.1rem; }
+      .btn { font-size: 1.4rem; padding: 14px 26px; min-width: 120px; }
+      .button-group { gap: 18px; }
+    }
+    @media (max-width: 360px) {
+      .btn { font-size: 1.2rem; padding: 12px 18px; min-width: 100px; }
+    }
+
+    .love-message {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 24px;
+      animation: softPop 0.8s ease;
+    }
+    .love-message h1 {
+      font-size: clamp(2rem, 9vw, 3.2rem);
+      color: #b32e4a;
+      text-shadow: 2px 2px 0 #ffd0d8;
+      line-height: 1.4;
+      font-weight: 800;
+    }
+    .love-message p {
+      font-size: 1.6rem;
+      color: #9e3e54;
+      background: rgba(255, 240, 245, 0.6);
+      padding: 24px 20px;
+      border-radius: 60px;
+      line-height: 1.5;
+      font-weight: 500;
+      backdrop-filter: blur(4px);
+      border: 1px solid #ffe3e9;
+      max-width: 90%;
+    }
+    .love-message .big-heart {
+      font-size: 4rem;
+      animation: pulse 1.5s infinite;
+      line-height: 1;
+    }
+    @keyframes softPop {
+      0%   { opacity: 0; transform: scale(0.92); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes pulse {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <div class="heart-bg" aria-hidden="true">
+    <span style="top: 10%; left: 8%; animation-duration: 9s;">❤️</span>
+    <span style="top: 70%; left: 85%; animation-duration: 11s; font-size: 2rem;">🌸</span>
+    <span style="top: 25%; left: 90%; animation-duration: 7s;">💕</span>
+    <span style="top: 85%; left: 15%; animation-duration: 12s; font-size: 1.8rem;">💗</span>
+    <span style="top: 45%; left: 5%; animation-duration: 10s;">🌹</span>
+    <span style="top: 60%; left: 95%; animation-duration: 8s;">💖</span>
+    <span style="top: 15%; left: 70%; animation-duration: 13s;">✨</span>
+    <span style="top: 92%; left: 45%; animation-duration: 9s;">💞</span>
+  </div>
+
+  <div class="card" id="questionCard">
+    <div class="question">Will you be my girlfriend?</div>
+    <div class="button-group">
+      <button class="btn btn-yes" id="yesBtn">Yes</button>
+      <button class="btn btn-no"  id="noBtn">No</button>
+    </div>
+  </div>
+
+  <div class="card hidden" id="loveCard">
+    <div class="love-message">
+      <div class="big-heart">❤️</div>
+      <h1>I love you with all my heart Jea!</h1>
+      <p>Thanks for giving me your love &lt;3</p>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const questionCard = document.getElementById('questionCard');
+      const loveCard     = document.getElementById('loveCard');
+      const yesBtn       = document.getElementById('yesBtn');
+      const noBtn        = document.getElementById('noBtn');
+
+      // Playful taunts the "No" button cycles through.
+      // It shows "No" first, then these on subsequent moves.
+      const taunts = [
+        'Catch me!',
+        'Over here!',
+        'Too slow!',
+        'Nope!',
+        'Try again!',
+        'Missed me!',
+        'Hehe~',
+        'Not today!',
+        'Wheee!',
+        'Almost!',
+        'Run!',
+        'Nuh uh!'
+      ];
+
+      let moved = false;
+      let lastIndex = -1;
+
+      // Pick a random phrase that isn't the same as the last one
+      function pickTaunt() {
+        if (taunts.length === 1) return taunts[0];
+        let i;
+        do { i = Math.floor(Math.random() * taunts.length); }
+        while (i === lastIndex);
+        lastIndex = i;
+        return taunts[i];
+      }
+
+      function moveNoButton() {
+        const btnRect = noBtn.getBoundingClientRect();
+        const btnW = btnRect.width;
+        const btnH = btnRect.height;
+
+        const margin = 12;
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+
+        const minCx = margin + btnW / 2;
+        const maxCx = vw - margin - btnW / 2;
+        const minCy = margin + btnH / 2;
+        const maxCy = vh - margin - btnH / 2;
+
+        const targetCx = (maxCx > minCx)
+          ? minCx + Math.random() * (maxCx - minCx)
+          : vw / 2;
+        const targetCy = (maxCy > minCy)
+          ? minCy + Math.random() * (maxCy - minCy)
+          : vh / 2;
+
+        const currentCx = btnRect.left + btnW / 2;
+        const currentCy = btnRect.top  + btnH / 2;
+
+        const dx = targetCx - currentCx;
+        const dy = targetCy - currentCy;
+
+        const style = window.getComputedStyle(noBtn);
+        const matrix = new DOMMatrixReadOnly(style.transform);
+        const currentTx = matrix.m41 || 0;
+        const currentTy = matrix.m42 || 0;
+
+        noBtn.style.transform =
+          `translate(${currentTx + dx}px, ${currentTy + dy}px)`;
+
+        // Change the button's text to a playful taunt
+        noBtn.textContent = pickTaunt();
+
+        moved = true;
+      }
+
+      function handleNo(e) {
+        if (e && e.cancelable) e.preventDefault();
+        if (e) e.stopPropagation();
+        moveNoButton();
+        return false;
+      }
+
+      noBtn.addEventListener('pointerenter', handleNo);
+      noBtn.addEventListener('pointerdown',  handleNo);
+      noBtn.addEventListener('touchstart',   handleNo, { passive: false });
+      noBtn.addEventListener('mouseover',    handleNo);
+      noBtn.addEventListener('click',        handleNo);
+      noBtn.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') handleNo(e);
+      });
+
+      function clampBack() {
+        if (!moved) return;
+
+        const rect = noBtn.getBoundingClientRect();
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const margin = 12;
+
+        let dx = 0, dy = 0;
+        if (rect.left   < margin)      dx = margin - rect.left;
+        if (rect.top    < margin)      dy = margin - rect.top;
+        if (rect.right  > vw - margin) dx = (vw - margin) - rect.right;
+        if (rect.bottom > vh - margin) dy = (vh - margin) - rect.bottom;
+
+        if (dx !== 0 || dy !== 0) {
+          const style = window.getComputedStyle(noBtn);
+          const matrix = new DOMMatrixReadOnly(style.transform);
+          const curTx = matrix.m41 || 0;
+          const curTy = matrix.m42 || 0;
+          noBtn.style.transform = `translate(${curTx + dx}px, ${curTy + dy}px)`;
+        }
+      }
+      window.addEventListener('resize', clampBack);
+      window.addEventListener('orientationchange', clampBack);
+
+      yesBtn.addEventListener('click', function() {
+        questionCard.classList.add('hidden');
+        loveCard.classList.remove('hidden');
+        document.title = 'I love you Jea! ❤️';
+        noBtn.style.display = 'none';
+      });
+    })();
+  </script>
+
+  <noscript>Please enable JavaScript for the full experience.</noscript>
+</body>
+</html>
